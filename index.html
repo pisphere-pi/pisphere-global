@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>PiSphere — Web3 Cloud Meetings, Chat & Local Hub</title>
+  <!-- Brand Favicon Logo -->
+  <link rel="icon" type="image/png" href="logo.png" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Pi Network Official SDK -->
+  <!-- Pi Network Official SDK v2.0 -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -19,15 +21,12 @@
       overflow-x: hidden;
     }
     .glass-card {
-      background: rgba(24, 18, 43, 0.78);
+      background: rgba(24, 18, 43, 0.82);
       backdrop-filter: blur(14px);
-      border: 1px solid rgba(168, 85, 247, 0.22);
+      border: 1px solid rgba(168, 85, 247, 0.25);
     }
     .gold-gradient {
       background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
-    }
-    .purple-gradient {
-      background: linear-gradient(135deg, #6d28d9 0%, #9333ea 50%, #4c1d95 100%);
     }
     @keyframes ticker {
       0% { transform: translateX(100%); }
@@ -49,7 +48,6 @@
   <div id="promo-overlay" class="fixed inset-0 z-50 bg-[#070410] flex flex-col items-center justify-between p-4">
     <canvas id="promo-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
     
-    <!-- Top Bar inside Promo -->
     <div class="relative z-10 w-full max-w-md flex items-center justify-between pt-2">
       <div class="flex items-center gap-2 bg-purple-950/80 border border-purple-500/40 px-3 py-1.5 rounded-full">
         <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
@@ -66,22 +64,19 @@
       </div>
     </div>
 
-    <!-- Center Dynamic Caption -->
+    <!-- Center Brand Logo (logo.png) & Dynamic Caption -->
     <div class="relative z-10 text-center my-auto px-4 max-w-md pointer-events-none">
-      <div class="w-20 h-20 mx-auto mb-3 rounded-2xl gold-gradient p-0.5 shadow-2xl shadow-amber-500/30 flex items-center justify-center">
-        <div class="w-full h-full bg-[#110b22] rounded-2xl flex items-center justify-center">
-          <span class="text-3xl font-extrabold text-amber-400">π</span>
-        </div>
+      <div class="w-24 h-24 mx-auto mb-3 rounded-full gold-gradient p-0.5 shadow-2xl shadow-amber-500/40 flex items-center justify-center overflow-hidden">
+        <img src="logo.png" alt="PiSphere Logo" class="w-full h-full object-cover rounded-full" onerror="this.outerHTML='<div class=\'w-full h-full bg-[#110b22] rounded-full flex items-center justify-center text-3xl font-extrabold text-amber-400\'>π</div>'" />
       </div>
       <h1 class="text-3xl font-extrabold tracking-tight text-white drop-shadow-md">
         Pi<span class="text-amber-400">Sphere</span>
       </h1>
-      <p id="promo-caption" class="text-sm text-purple-200 mt-2 font-medium bg-black/50 px-4 py-2 rounded-xl border border-purple-500/30">
+      <p id="promo-caption" class="text-sm text-purple-200 mt-2 font-medium bg-black/60 px-4 py-2 rounded-xl border border-purple-500/30">
         Connecting millions of Pioneers into one Cloud Meeting & Chat Universe...
       </p>
     </div>
 
-    <!-- Bottom Progress & Enter Button -->
     <div class="relative z-10 w-full max-w-md pb-4">
       <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden mb-3">
         <div id="promo-progress" class="gold-gradient h-full w-0 transition-all duration-300"></div>
@@ -93,7 +88,7 @@
     </div>
   </div>
 
-  <!-- 2. LEGAL & PRIVACY CONSENT SHIELD MODAL (IT ACT SEC 79 & GDPR) -->
+  <!-- 2. LEGAL & PRIVACY CONSENT SHIELD MODAL -->
   <div id="legal-modal" class="fixed inset-0 z-40 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass-card w-full max-w-md rounded-2xl p-5 border border-amber-500/40 shadow-2xl">
       <div class="flex items-center gap-3 mb-3">
@@ -107,15 +102,15 @@
       </div>
 
       <div class="bg-black/40 rounded-xl p-3 text-xs text-gray-300 space-y-2 max-h-56 overflow-y-auto border border-white/10">
-        <p>• <strong>Intermediary Safe Harbor:</strong> PiSphere keval ek communication madhyam hai. Meeting, chat ya public feed mein kisi bhi user dwara bole ya post kiye gaye content ki kanooni zimmedari swayam us user ki hogi.</p>
-        <p>• <strong>Zero Sensitive Data:</strong> Hum aapka password, bank detail ya Aadhaar store nahi karte. Keval Pi Network SDK ka verified username aur wallet upyog hota hai.</p>
-        <p>• <strong>AI Summary & Local Ads:</strong> Cloud meetings mein AI speech-to-text summary banti hai (jise Pi se unlock kiya ja sakta hai) aur niche patti par verified local ads dikhaye jaate hain.</p>
-        <p>• <strong>Right to Delete & Report:</strong> Har chat aur meeting mein turant 'Report & Block' aur 'Delete My Data' ka adhikar uplabdh hai.</p>
+        <p>• <strong>Intermediary Safe Harbor:</strong> PiSphere केवल एक कम्युनिकेशन माध्यम है। मीटिंग, चैट या फीड में किसी भी यूजर द्वारा बोले या पोस्ट किए गए कंटेंट की कानूनी जिम्मेदारी स्वयं उस यूजर की होगी।</p>
+        <p>• <strong>Zero Sensitive Data:</strong> हम आपका पासवर्ड, बैंक डिटेल या आधार सेव नहीं करते। केवल Pi Network SDK का वेरिफाइड यूजरनेम और वॉलेट उपयोग होता है।</p>
+        <p>• <strong>AI Summary & Local Ads:</strong> क्लाउड मीटिंग्स में AI स्पीच-टू-टेक्स्ट समरी बनती है (जिसे Pi से अनलॉक किया जा सकता है) और नीचे पट्टी पर वेरिफाइड लोकल विज्ञापन दिखाए जाते हैं।</p>
+        <p>• <strong>Right to Delete & Report:</strong> हर चैट और मीटिंग में तुरंत 'Report & Block' और 'Delete My Data' का अधिकार उपलब्ध है।</p>
       </div>
 
       <label class="flex items-start gap-2.5 mt-4 cursor-pointer text-xs text-gray-200">
         <input id="legal-checkbox" type="checkbox" class="mt-0.5 w-4 h-4 accent-amber-500 rounded" />
-        <span data-i18n="legal_agree">Main 18+ varsh ka hoon aur PiSphere ki Terms, Privacy Policy, AI Meeting Summary aur Local Ad guidelines se poori tarah sahmat hoon.</span>
+        <span data-i18n="legal_agree">मैं 18+ वर्ष का हूँ और PiSphere की शर्तों, प्राइवेसी पॉलिसी, AI मीटिंग समरी और लोकल विज्ञापन नियमों से पूरी तरह सहमत हूँ।</span>
       </label>
 
       <button onclick="AppShell.acceptLegal()" class="w-full mt-4 py-2.5 rounded-xl gold-gradient text-black font-extrabold text-sm shadow-lg">
@@ -124,39 +119,34 @@
     </div>
   </div>
 
-  <!-- 3. TOP HEADER BAR (BRAND + LANGUAGE + PI USER + ADMIN) -->
+  <!-- 3. TOP HEADER BAR (WITH LOGO.PNG) -->
   <header class="sticky top-0 z-30 glass-card border-b border-purple-500/20 px-3 py-2.5">
     <div class="max-w-md mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="w-9 h-9 rounded-xl gold-gradient p-0.5 flex items-center justify-center shadow-md">
-          <div class="w-full h-full bg-[#120b24] rounded-[10px] flex items-center justify-center">
-            <span class="text-lg font-extrabold text-amber-400">π</span>
-          </div>
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-full gold-gradient p-0.5 flex items-center justify-center shadow-md overflow-hidden">
+          <img src="logo.png" alt="PiSphere" class="w-full h-full object-cover rounded-full" onerror="this.outerHTML='<div class=\'w-full h-full bg-[#120b24] rounded-full flex items-center justify-center text-lg font-extrabold text-amber-400\'>π</div>'" />
         </div>
         <div>
           <div class="flex items-center gap-1.5">
             <span class="font-extrabold text-base tracking-tight text-white">Pi<span class="text-amber-400">Sphere</span></span>
-            <span class="text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.5 rounded font-bold">v1.0</span>
+            <span class="text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-1.5 py-0.5 rounded font-bold">WEB3</span>
           </div>
           <p id="pi-user-badge" class="text-[10px] text-purple-300">@Pioneer_Connecting...</p>
         </div>
       </div>
 
       <div class="flex items-center gap-1.5">
-        <!-- Global Multi-Language Selector -->
         <select id="lang-select" onchange="AppShell.changeLanguage(this.value)" class="bg-purple-950/90 text-xs text-amber-300 border border-purple-500/40 rounded-lg px-2 py-1.5 font-semibold focus:outline-none">
-          <option value="hi">🇮🇳 हिंदी / Hinglish</option>
+          <option value="hi">🇮🇳 हिंदी</option>
           <option value="en">🌐 English</option>
           <option value="es">🇪🇸 Español</option>
           <option value="zh">🇨🇳 中文</option>
         </select>
 
-        <!-- Report / Safety Shield Quick Button -->
-        <button onclick="AppShell.openSafetyReport()" title="Report / Legal Safety" class="w-8 h-8 rounded-lg bg-rose-500/20 border border-rose-500/40 text-rose-300 flex items-center justify-center text-xs">
+        <button onclick="AppShell.openSafetyReport()" title="Report / Safety Shield" class="w-8 h-8 rounded-lg bg-rose-500/20 border border-rose-500/40 text-rose-300 flex items-center justify-center text-xs">
           <i class="fa-solid fa-flag"></i>
         </button>
 
-        <!-- Super Admin Panel Trigger -->
         <button onclick="AppShell.switchTab('admin')" title="Super Admin Panel" class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center text-xs">
           <i class="fa-solid fa-sliders"></i>
         </button>
@@ -164,7 +154,7 @@
     </div>
   </header>
 
-  <!-- 4. LIVE LOCAL AD TICKER BAR (CONTROLLED BY ADMIN PANEL) -->
+  <!-- 4. LIVE LOCAL AD TICKER BAR -->
   <div class="bg-gradient-to-r from-amber-950/90 via-purple-950/95 to-amber-950/90 border-b border-amber-500/30 py-1.5 px-2 overflow-hidden relative">
     <div class="max-w-md mx-auto flex items-center gap-2">
       <span class="bg-amber-400 text-black text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase shrink-0">
@@ -172,7 +162,7 @@
       </span>
       <div class="overflow-hidden w-full">
         <div id="live-ad-ticker" class="animate-ticker text-xs text-amber-200 font-medium">
-          🔥 [Sponsored] Sharma Coaching Classes: 100-Seat Live Pi Batch Starting Today! • 🏥 City Care Clinic: Live Video Consultation @ 2 Pi Only • 🛒 Book Your Local Ad Here via Admin Panel!
+          🔥 [Sponsored] Sharma Coaching Classes: 100-Seat Live Pi Batch Starting Today! • 🏥 City Care Clinic: Video Consultation @ 2 Pi Only • 🛒 Book Your Local Ad via Admin Panel!
         </div>
       </div>
       <button onclick="AppShell.contactAdvertiser()" class="bg-amber-500/30 hover:bg-amber-500/50 border border-amber-400/50 text-amber-200 text-[10px] px-2 py-0.5 rounded shrink-0 font-bold">
@@ -181,108 +171,14 @@
     </div>
   </div>
 
-  <!-- 5. MAIN DYNAMIC MODULE CONTAINER (4 TABS + ADMIN) -->
+  <!-- 5. MAIN DYNAMIC MODULE CONTAINER -->
   <main class="flex-1 max-w-md w-full mx-auto p-3 pb-24 space-y-3">
-
-    <!-- TAB 1: CHATS & GROUPS (TELEGRAM STYLE) -->
-    <section id="tab-chats" class="space-y-3">
-      <div class="glass-card rounded-2xl p-3.5">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="text-sm font-extrabold text-white flex items-center gap-2">
-            <i class="fa-solid fa-comments text-amber-400"></i>
-            <span data-i18n="tab_chats">Smart Chats & VIP Groups</span>
-          </h2>
-          <button onclick="AppShell.showToast('New Group / Broadcast Channel Modal Ready for Step 2')" class="text-xs bg-purple-600 hover:bg-purple-500 text-white px-2.5 py-1 rounded-lg font-bold">
-            + New Group
-          </button>
-        </div>
-        <p class="text-xs text-purple-200">
-          Telegram-style encrypted group chats, paid VIP channels, aur instant voice rooms yahan connect honge (`chat-module.js`).
-        </p>
-      </div>
-    </section>
-
-    <!-- TAB 2: 100-USER CLOUD MEETING & PAID SUMMARY (ZOOM STYLE) -->
-    <section id="tab-meetings" class="hidden space-y-3">
-      <div class="glass-card rounded-2xl p-4">
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <h2 class="text-sm font-extrabold text-white" data-i18n="tab_meetings">100-User Cloud Meeting Hub</h2>
-            <p class="text-[11px] text-purple-300">Active-Speaker HD Grid • Low Data Mode • AI Summary</p>
-          </div>
-          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">
-            WebRTC Ready
-          </span>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2.5 mt-3">
-          <button onclick="AppShell.showToast('Starting 100-User Cloud Meeting Room...')" class="p-3 rounded-xl gold-gradient text-black font-extrabold text-xs flex flex-col items-center gap-1.5 shadow-lg">
-            <i class="fa-solid fa-video text-lg"></i>
-            <span data-i18n="btn_start_meeting">Start Cloud Meeting</span>
-          </button>
-          <button onclick="AppShell.showToast('Joining Meeting via Room ID...')" class="p-3 rounded-xl bg-purple-800/80 border border-purple-400/40 text-white font-extrabold text-xs flex flex-col items-center gap-1.5">
-            <i class="fa-solid fa-right-to-bracket text-lg text-amber-400"></i>
-            <span data-i18n="btn_join_meeting">Join with ID</span>
-          </button>
-        </div>
-
-        <!-- Paid AI Summary Demo Card -->
-        <div class="mt-4 bg-black/40 rounded-xl p-3 border border-amber-500/30">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-amber-300"><i class="fa-solid fa-file-lines mr-1"></i> Latest Meeting AI Summary (MOM)</span>
-            <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-bold">0.5 π / User</span>
-          </div>
-          <p class="text-xs text-gray-300 mt-1.5 line-clamp-2">
-            Preview: PiSphere Global Launch Meeting mein 84 Pioneers jude. Local business ads aur Web3 commerce par 3 bade faisle liye gaye... [Locked]
-          </p>
-          <button onclick="AppShell.unlockSummaryDemo()" class="w-full mt-2.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-lock-open"></i> Unlock Full PDF Summary (0.5 Pi)
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 3: SOCIAL FEED & LOCAL SERVICES (TWITTER + URBAN HUB) -->
-    <section id="tab-feed" class="hidden space-y-3">
-      <div class="glass-card rounded-2xl p-4">
-        <h2 class="text-sm font-extrabold text-white mb-1" data-i18n="tab_feed">Global Feed & Local Services</h2>
-        <p class="text-xs text-purple-200">
-          Twitter-style live thoughts, verified blue-tick profiles, aur aapke shehar ke doctors, teachers aur shops ki booking list yahan dikhegi.
-        </p>
-      </div>
-    </section>
-
-    <!-- TAB 4: REWARDS & PI WALLET -->
-    <section id="tab-wallet" class="hidden space-y-3">
-      <div class="glass-card rounded-2xl p-4">
-        <h2 class="text-sm font-extrabold text-white mb-1" data-i18n="tab_wallet">Pi Wallet & Daily Attendance Rewards</h2>
-        <p class="text-xs text-purple-200">
-          Aapke Pi payments, meeting host commissions, aur daily attendance points ka poora hisab yahan rahega.
-        </p>
-      </div>
-    </section>
-
-    <!-- TAB 5: SUPER ADMIN COMMAND CENTER -->
-    <section id="tab-admin" class="hidden space-y-3">
-      <div class="glass-card rounded-2xl p-4 border border-amber-500/50">
-        <div class="flex items-center justify-between mb-2">
-          <h2 class="text-sm font-extrabold text-amber-400">
-            <i class="fa-solid fa-crown mr-1"></i> Super Admin Command Center
-          </h2>
-          <span class="text-[10px] bg-amber-500 text-black font-extrabold px-2 py-0.5 rounded">OWNER MODE</span>
-        </div>
-        <p class="text-xs text-gray-300 mb-3">
-          Yahan se aap Cloud Meeting ke niche chalne wale Local Ads create karenge, Meeting Summaries ka Pi rate tay karenge aur reported users ko block karenge.
-        </p>
-        <div class="space-y-2">
-          <input id="admin-ad-input" type="text" placeholder="Naya Local Ad text likhein (e.g. Gupta Electronics 20% Off in Pi)..." class="w-full bg-black/50 border border-purple-500/40 rounded-lg px-3 py-2 text-xs text-white" />
-          <button onclick="AppShell.PublishInstantAd()" class="w-full py-2 rounded-lg gold-gradient text-black font-extrabold text-xs">
-            Publish Live Local Ad on Meeting Bar
-          </button>
-        </div>
-      </div>
-    </section>
-
+    <!-- Rendered dynamically by chat-module.js, meeting-module.js, and admin-panel.js -->
+    <section id="tab-chats" class="space-y-3"></section>
+    <section id="tab-meetings" class="hidden space-y-3"></section>
+    <section id="tab-feed" class="hidden space-y-3"></section>
+    <section id="tab-wallet" class="hidden space-y-3"></section>
+    <section id="tab-admin" class="hidden space-y-3"></section>
   </main>
 
   <!-- 6. BOTTOM 4-TAB NAVIGATION BAR -->
@@ -307,16 +203,19 @@
     </div>
   </nav>
 
-  <!-- Footer Copyright -->
   <div class="fixed bottom-16 right-3 z-20 pointer-events-none">
-    <span class="text-[9px] text-purple-400/60 bg-black/50 px-2 py-0.5 rounded-full border border-purple-500/20">
-      © 2026 PiSphere Global • All Rights Reserved
+    <span class="text-[9px] text-purple-400/60 bg-black/60 px-2 py-0.5 rounded-full border border-purple-500/20">
+      © 2026 PiSphere Global • Official Brand
     </span>
   </div>
 
   <!-- MODULAR JAVASCRIPT FILES -->
   <script src="config.js"></script>
   <script src="promo-anim.js"></script>
+  <script src="chat-module.js"></script>
+  <script src="meeting-module.js"></script>
+  <script src="admin-panel.js"></script>
 </body>
 </html>
 
+Displaying 1000467041.png.

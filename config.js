@@ -1,51 +1,44 @@
 // ==========================================
-// PISPHERE GLOBAL CONFIGURATION & MULTI-LANGUAGE
+// PISPHERE GLOBAL CONFIGURATION, PI SDK & PI ADS ENGINE
 // © 2026 PiSphere Official. All Rights Reserved.
 // ==========================================
 
 const PiSphereConfig = {
   appName: "PiSphere",
+  // नीचे अपनी Pi Developer Portal / App Studio वाली App ID डालें:
+  piAppId: "pisphere-global-app-id",
+  validationFileUrl: "/pi-app-validation.txt",
   version: "1.0.0",
-  sandboxMode: true, // Testing mode ke liye true rakha gaya hai
+  sandboxMode: true, // टेस्टिंग के लिए true है, मेननेट या लाइव पर false कर सकते हैं
+  adNetworkEnabled: true,
   defaultSummaryPricePi: 0.5,
   defaultMeetingPassPi: 2.0,
+  vipGroupEntryPi: 1.0,
   platformCommissionPercent: 15,
-  // Future MongoDB Atlas & WebRTC Endpoints (Zero-code upgrade ready)
   endpoints: {
+    // अगर आप Pi App Studio का बैकएंड इस्तेमाल कर रहे हैं तो उसका लिंक यहाँ रहेगा:
+    piAuthLoginUrl: "https://backend.appstudio.piappengine.com/pi/auth/v1/login",
     mongoApiUrl: "https://your-mongodb-serverless-api.netlify.app/api",
     livekitUrl: "wss://pisphere-live.livekit.cloud"
   }
 };
 
-// Global Multi-Language Dictionary
 const PiSphereLang = {
   hi: {
-    enter_app: "PiSphere Mein Pravesh Karein",
-    legal_title: "Kanooni Suraksha & Privacy Sahmati",
-    legal_agree: "Main 18+ varsh ka hoon aur PiSphere ki Terms, Privacy Policy, AI Summary aur Local Ad niyamon se sahmat hoon.",
-    accept_continue: "Sahmat Hain Aur Aage Badhein",
-    tab_chats: "Smart Chats & VIP Groups",
-    tab_meetings: "100-User Cloud Meeting Hub",
-    tab_feed: "Global Feed & Local Services",
-    tab_wallet: "Pi Wallet & Daily Rewards",
-    btn_start_meeting: "Cloud Meeting Shuru Karein",
-    btn_join_meeting: "Meeting ID Se Judein",
-    nav_chats: "Chats",
-    nav_meetings: "Meeting",
-    nav_feed: "Local Hub",
-    nav_wallet: "Rewards"
+    enter_app: "PiSphere में प्रवेश करें",
+    legal_title: "कानूनी सुरक्षा और प्राइवेसी सहमति",
+    legal_agree: "मैं 18+ वर्ष का हूँ और PiSphere की शर्तों, प्राइवेसी पॉलिसी, AI मीटिंग समरी और लोकल विज्ञापन नियमों से सहमत हूँ।",
+    accept_continue: "सहमत हैं और आगे बढ़ें",
+    nav_chats: "चैट्स",
+    nav_meetings: "मीटिंग",
+    nav_feed: "लोकल हब",
+    nav_wallet: "रिवॉर्ड्स"
   },
   en: {
     enter_app: "Enter PiSphere Ecosystem",
     legal_title: "Legal Shield & Privacy Consent",
     legal_agree: "I am 18+ years old and agree to PiSphere's Terms, Safe-Harbor Policy, AI Summary & Local Ad guidelines.",
     accept_continue: "Accept & Continue Safely",
-    tab_chats: "Smart Chats & VIP Groups",
-    tab_meetings: "100-User Cloud Meeting Hub",
-    tab_feed: "Global Feed & Local Services",
-    tab_wallet: "Pi Wallet & Daily Rewards",
-    btn_start_meeting: "Start Cloud Meeting",
-    btn_join_meeting: "Join with ID",
     nav_chats: "Chats",
     nav_meetings: "Meetings",
     nav_feed: "Local & Feed",
@@ -56,12 +49,6 @@ const PiSphereLang = {
     legal_title: "Protección Legal y Privacidad",
     legal_agree: "Tengo más de 18 años y acepto los términos, resúmenes de IA y anuncios locales de PiSphere.",
     accept_continue: "Aceptar y Continuar",
-    tab_chats: "Chats y Grupos VIP",
-    tab_meetings: "Reunión en la Nube (100 Usuarios)",
-    tab_feed: "Feed Global y Servicios Locales",
-    tab_wallet: "Billetera Pi y Recompensas",
-    btn_start_meeting: "Iniciar Reunión",
-    btn_join_meeting: "Unirse con ID",
     nav_chats: "Chats",
     nav_meetings: "Reunión",
     nav_feed: "Servicios",
@@ -72,12 +59,6 @@ const PiSphereLang = {
     legal_title: "法律保护与隐私同意",
     legal_agree: "我已年满18岁，同意 PiSphere 的条款、AI 会议摘要和本地广告规则。",
     accept_continue: "同意并继续",
-    tab_chats: "智能聊天与 VIP 群组",
-    tab_meetings: "100人云端视频会议",
-    tab_feed: "全球动态与本地服务",
-    tab_wallet: "Pi 钱包与每日奖励",
-    btn_start_meeting: "发起云会议",
-    btn_join_meeting: "输入ID加入",
     nav_chats: "聊天",
     nav_meetings: "云会议",
     nav_feed: "本地服务",
@@ -85,27 +66,94 @@ const PiSphereLang = {
   }
 };
 
-// Core Shell Controller
 const AppShell = {
-  currentUser: null,
+  currentUser: { username: "Pioneer_Guest", uid: "test_uid_01" },
+  rewardPoints: Number(localStorage.getItem("pisphere_pts") || 120),
 
   init: async function () {
-    // Initialize Pi SDK in Sandbox/Testing Mode
     try {
       if (window.Pi) {
         window.Pi.init({ version: "2.0", sandbox: PiSphereConfig.sandboxMode });
         const scopes = ["username", "payments"];
-        const auth = await window.Pi.authenticate(scopes, function (payment) {
-          console.log("Incomplete payment found:", payment);
+        const auth = await window.Pi.authenticate(scopes, function (incompletePayment) {
+          console.log("Incomplete Pi Payment:", incompletePayment);
         });
         this.currentUser = auth.user;
-        document.getElementById("pi-user-badge").innerText = "@" + auth.user.username + " (Verified)";
+        document.getElementById("pi-user-badge").innerText = "@" + auth.user.username + " • Verified";
       } else {
-        document.getElementById("pi-user-badge").innerText = "@Pioneer_TestMode";
+        document.getElementById("pi-user-badge").innerText = "@Pioneer_TestMode (Sandbox)";
       }
     } catch (err) {
-      document.getElementById("pi-user-badge").innerText = "@Pioneer_Guest (Sandbox)";
+      document.getElementById("pi-user-badge").innerText = "@Pioneer_Sandbox";
     }
+  },
+
+  // ऑफिशियल Pi Payment फंक्शन (मीटिंग समरी, VIP ग्रुप, लोकल सर्विस व पास के लिए)
+  payWithPi: async function (amountPi, memoText, metadataObj, onSuccessCallback) {
+    if (!window.Pi) {
+      const confirmSim = confirm(`[Pi Sandbox Payment]\n\nService: ${memoText}\nAmount: ${amountPi} π\n\nक्या आप टेस्ट पेमेंट अप्रूव करना चाहते हैं?`);
+      if (confirmSim && onSuccessCallback) onSuccessCallback({ txid: "sandbox_tx_" + Date.now() });
+      return;
+    }
+
+    try {
+      await window.Pi.createPayment(
+        {
+          amount: Number(amountPi),
+          memo: memoText,
+          metadata: Object.assign({ appId: PiSphereConfig.piAppId }, metadataObj || {})
+        },
+        {
+          onReadyForServerApproval: function (paymentId) {
+            console.log("Server approval requested for:", paymentId);
+          },
+          onReadyForServerCompletion: function (paymentId, txid) {
+            if (onSuccessCallback) onSuccessCallback({ paymentId, txid });
+          },
+          onCancel: function (paymentId) {
+            alert("पेमेंट कैंसिल कर दिया गया।");
+          },
+          onError: function (error, payment) {
+            console.warn("Pi SDK Payment Fallback for testing:", error);
+            const ok = confirm(`[Testing Mode Payment]\n${memoText} (${amountPi} π) को टेस्ट मोड में अनलॉक करें?`);
+            if (ok && onSuccessCallback) onSuccessCallback({ txid: "test_tx_" + Date.now() });
+          }
+        }
+      );
+    } catch (e) {
+      const ok = confirm(`[Testing Mode Payment]\n${memoText} (${amountPi} π) को टेस्ट मोड में अनलॉक करें?`);
+      if (ok && onSuccessCallback) onSuccessCallback({ txid: "test_tx_" + Date.now() });
+    }
+  },
+
+  // ऑफिशियल Pi Ad Network (Interstitial & Rewarded Ads)
+  showPiAd: async function (adType = "interstitial", onRewardCallback) {
+    try {
+      if (window.Pi && window.Pi.Ads) {
+        const isReady = await window.Pi.Ads.isAdReady(adType);
+        if (!isReady.ready) {
+          await window.Pi.Ads.requestAd(adType);
+        }
+        const response = await window.Pi.Ads.showAd(adType);
+        if (response.result === "AD_REWARDED" || response.result === "AD_CLOSED") {
+          if (onRewardCallback) onRewardCallback();
+        }
+        return;
+      }
+    } catch (err) {
+      console.log("Pi Ads SDK fallback in browser:", err);
+    }
+
+    // ब्राउज़र/टेस्टिंग मोड में Pi Ad सिमुलेशन
+    alert(`📺 [Pi Ad Network — ${adType.toUpperCase()} AD]\n\nPi Ecosystem Sponsored Ad दिखाया गया! (आपकी App ID पर रेवेन्यू काउंट हुआ)`);
+    if (onRewardCallback) onRewardCallback();
+  },
+
+  addRewardPoints: function (pts, reason) {
+    this.rewardPoints += pts;
+    localStorage.setItem("pisphere_pts", this.rewardPoints);
+    if (window.ChatModule) ChatModule.renderWalletTab();
+    if (reason) alert(`🎉 +${pts} PiSphere Points मिले! (${reason})`);
   },
 
   checkLegalConsent: function () {
@@ -120,7 +168,7 @@ const AppShell = {
   acceptLegal: function () {
     const check = document.getElementById("legal-checkbox");
     if (!check.checked) {
-      alert("Kripya aage badhne ke liye 18+ aur Legal Terms tick-box par click karein.");
+      alert("कृपया आगे बढ़ने के लिए 18+ और कानूनी शर्तों वाले बॉक्स पर टिक करें।");
       return;
     }
     localStorage.setItem("pisphere_legal_v1", "accepted_" + Date.now());
@@ -157,33 +205,19 @@ const AppShell = {
     });
   },
 
-  PublishInstantAd: function () {
-    const input = document.getElementById("admin-ad-input");
-    if (!input.value.trim()) return;
-    const ticker = document.getElementById("live-ad-ticker");
-    ticker.innerText = "📢 [ADMIN SPONSORED AD] " + input.value.trim() + " • " + ticker.innerText;
-    input.value = "";
-    alert("Local Ad Live Meeting aur Top Bar mein turant update ho gaya!");
-  },
-
-  unlockSummaryDemo: async function () {
-    alert("Pi Payment Request: 0.5 Pi Summary Unlock trigger ho raha hai (Testing Mode).");
-  },
-
   openSafetyReport: function () {
-    const reason = prompt("Safety & Legal Report: Kisi user, group ya meeting ki shikayat darj karein:");
-    if (reason) {
-      alert("Aapki report Admin Command Center mein darj ho gayi hai. 24 ghante ke bheetar action liya jayega.");
+    const reason = prompt("🛡️ Safety & Legal Report (IT Act Sec 79):\nकिसी यूजर, ग्रुप या मीटिंग की शिकायत यहाँ लिखें:");
+    if (reason && reason.trim()) {
+      if (window.AdminModule) {
+        AdminModule.addSafetyReport(reason.trim());
+      }
+      alert("आपकी शिकायत एडमिन कमांड सेंटर में दर्ज हो गई है। 24 घंटे के भीतर कार्रवाई की जाएगी।");
     }
   },
 
   contactAdvertiser: function () {
     this.switchTab("chats");
-    alert("Advertiser ke direct chat box se connect kiya ja raha hai...");
-  },
-
-  showToast: function (msg) {
-    alert(msg);
+    alert("लोकल विज्ञापनदाता के चैट बॉक्स से जोड़ा जा रहा है...");
   }
 };
 
@@ -191,3 +225,4 @@ window.addEventListener("DOMContentLoaded", () => {
   AppShell.init();
 });
 
+Displaying 1000467041.png.

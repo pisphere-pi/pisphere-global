@@ -1,0 +1,10 @@
+{
+  "name": "pisphere-global-cloud",
+  "version": "1.0.0",
+  "description": "PiSphere Web3 Cloud Meeting, Chat, AI Summary & Local Ad Backend",
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  }
+}
+
+Displaying 1000467041.png.

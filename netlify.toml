@@ -1,20 +1,9 @@
 [build]
   publish = "."
-  functions = "netlify/functions"
 
-# API कॉल्स को सीधे बैकएंड फंक्शन पर भेजने का नियम
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
+  from = "/*"
+  to = "/index.html"
   status = 200
-
-# Pi Browser, Pi SDK और डेटा सुरक्षा के लिए सिक्योरिटी हेडर्स
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type, Authorization"
-    Content-Security-Policy = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; frame-ancestors 'self' https://*.minepi.com https://*.piappengine.com https://app-cdn.minepi.com;"
 
 Displaying 1000467041.png.

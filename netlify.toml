@@ -1,9 +1,0 @@
-[build]
-  publish = "."
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-Displaying 1000467041.png.

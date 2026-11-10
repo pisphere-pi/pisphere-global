@@ -1,66 +1,7 @@
-/* File: styles/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --bg-dark: #0B0410; /* डीप डार्क पर्पल/ब्लैक बैकग्राउंड */
-  --card-bg: #1A0B2E; /* कार्ड्स के लिए थोड़ा हल्का पर्पल */
-  --primary-yellow: #FFD700;
-  --text-light: #FFFFFF;
-  --text-muted: #B3A1C9;
-}
-
-body {
-  background-color: var(--bg-dark);
-  color: var(--text-light);
-  font-family: 'Inter', sans-serif; /* आप चाहें तो कोई और मॉडर्न फॉन्ट यूज़ कर सकते हैं */
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-/* 🔥 नया सॉफ्ट शैडो कार्ड (बिना बॉर्डर के) */
-.soft-card {
-  background-color: var(--card-bg);
-  border-radius: 16px;
-  /* बॉर्डर हटा दिया गया है, सिर्फ परछाई (Shadow) से डेप्थ आ रही है */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(255, 255, 255, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.soft-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-}
-
-/* 🟡 पीला बटन (काले टेक्स्ट के साथ) */
-.btn-yellow {
-  background-color: var(--primary-yellow);
-  color: #000000;
-  font-weight: 700;
-  padding: 12px 24px;
-  border-radius: 12px;
-  border: none;
-  /* बटन के चारों तरफ हल्की पीली चमक */
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.btn-yellow:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.4);
-}
-
-/* स्क्रॉलबार को सॉफ्ट और छिपाने के लिए (जैसे ऐप्स में होता है) */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #3A1C5A;
-  border-radius: 10px;
-}
+module.exports = {
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'hi', 'mr', 'ta', 'te', 'bn', 'gu', 'kn', 'ml', 'pa', 'or', 'as', 'ur', 'zh', 'es', 'fr', 'ar'],
+    localeDetection: true,
+  },
+};

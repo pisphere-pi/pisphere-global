@@ -1,6 +1,10 @@
+
+आने वाला समय <rknc83@gmail.com>
+12:45 AM (7 minutes ago)
+to me
+
 [build]
   command = "npm run build"
-  publish = ".next"
 
 [[headers]]
   for = "/*"
@@ -8,4 +12,3 @@
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type, Authorization"
-Displaying 1000467041.png. 

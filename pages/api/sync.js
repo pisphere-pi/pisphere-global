@@ -82,4 +82,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: err.message });
   }
 }
-Displaying 1000467041.png. 

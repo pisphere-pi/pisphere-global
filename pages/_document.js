@@ -24,7 +24,6 @@ export default function Document() {
             backdrop-filter: blur(14px);
             border: 1px solid rgba(168, 85, 247, 0.24);
           }
-          /* Soft Warm Gold Button with Deep Dark Black Text */
           .soft-gold-btn {
             background: linear-gradient(135deg, #e5c467 0%, #d4ac42 100%);
             color: #090612 !important;
@@ -52,4 +51,3 @@ export default function Document() {
     </Html>
   );
 }
-Displaying 1000467041.png. 

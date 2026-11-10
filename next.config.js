@@ -21,4 +21,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-Displaying 1000467041.png. 

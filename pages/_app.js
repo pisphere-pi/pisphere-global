@@ -1,2 +1,11 @@
-MONGODB_URI=your_mongodb_connection_string_here
-NEXT_PUBLIC_PI_API_KEY=your_pi_api_key_here
+import '../styles/globals.css';
+import { useEffect } from 'react';
+import { initPiNetwork } from '../lib/piConfig';
+
+export default function App({ Component, pageProps }) {
+  useEffect(() => {
+    initPiNetwork();
+  }, []);
+
+  return <Component {...pageProps} />;
+}

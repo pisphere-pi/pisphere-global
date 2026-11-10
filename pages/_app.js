@@ -1,0 +1,2 @@
+MONGODB_URI=your_mongodb_connection_string_here
+NEXT_PUBLIC_PI_API_KEY=your_pi_api_key_here

@@ -1,84 +1,45 @@
-import { MongoClient } from "mongodb";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-let cachedDb = null;
-
-async function getDatabase() {
-  const uri = process.env.MONGODB_URI;
-  if (!uri) return null;
-  if (cachedDb) return cachedDb;
-
-  const client = new MongoClient(uri);
-  await client.connect();
-  cachedDb = client.db("pisphere_global_db");
-  return cachedDb;
+:root {
+  --bg-dark: #0B0410;
+  --card-bg: #1A0B2E;
+  --primary-yellow: #FFD700;
+  --text-light: #FFFFFF;
 }
 
-export default async function handler(req, res) {
-  try {
-    const db = await getDatabase();
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
-    if (req.method === "GET") {
-      if (!db) {
-        return res.status(200).json({ status: "sandbox_mode", dbConnected: false });
-      }
-      const ads = await db.collection("local_ads").find({ active: true }).sort({ createdAt: -1 }).limit(20).toArray();
-      const summaries = await db.collection("meeting_summaries").find({}).sort({ createdAt: -1 }).limit(20).toArray();
-      const supportTickets = await db.collection("support_tickets").find({}).sort({ updatedAt: -1 }).limit(50).toArray();
-      return res.status(200).json({ status: "ok", dbConnected: true, ads, summaries, supportTickets });
-    }
+/* सॉफ्ट शैडो कार्ड */
+.soft-card {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease;
+}
 
-    if (req.method === "POST") {
-      const body = req.body || {};
-      if (db) {
-        if (body.action === "ad") {
-          await db.collection("local_ads").insertOne({
-            business: body.business,
-            text: body.text,
-            active: true,
-            createdAt: new Date()
-          });
-        } else if (body.action === "summary") {
-          await db.collection("meeting_summaries").insertOne({
-            id: body.id,
-            title: body.title,
-            date: body.date,
-            host: body.host,
-            pricePi: body.pricePi,
-            preview: body.preview,
-            fullContent: body.fullContent,
-            createdAt: new Date()
-          });
-        } else if (body.action === "support_ticket") {
-          await db.collection("support_tickets").updateOne(
-            { username: body.username },
-            {
-              $set: { uid: body.uid, lang: body.lang, unread: true, updatedAt: new Date() },
-              $push: {
-                messages: {
-                  fromAdmin: false,
-                  category: body.category,
-                  text: body.text,
-                  time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-                }
-              }
-            },
-            { upsert: true }
-          );
-        } else if (body.action === "payment") {
-          await db.collection("pi_transactions").insertOne({
-            username: body.username,
-            amountPi: body.amountPi,
-            memo: body.memo,
-            txid: body.txid,
-            createdAt: new Date()
-          });
-        }
-      }
-      return res.status(200).json({ saved: true });
-    }
+.soft-card:active {
+  transform: scale(0.98);
+}
 
-    return res.status(200).json({ message: "PiSphere Next.js API Ready" });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
+/* येलो बटन (ब्लैक टेक्स्ट) */
+.btn-yellow {
+  background-color: var(--primary-yellow);
+  color: #000000;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
 }

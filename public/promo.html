@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PiSphere Official Promo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html {
+      width: 100%; height: 100%; overflow: hidden;
+      background: #05050A; font-family: system-ui, -apple-system, sans-serif;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: #FFFFFF;
+    }
+    #promo-video {
+      width: 100vw; height: 100vh; object-fit: cover;
+      position: absolute; inset: 0; z-index: 1;
+    }
+    .promo-fallback {
+      position: relative; z-index: 2; text-align: center; padding: 24px;
+      animation: fadeIn 1.2s ease-out;
+    }
+    .lens-logo {
+      width: 96px; height: 96px; border-radius: 50%;
+      background: radial-gradient(circle, #1E1E2E 0%, #090910 75%);
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.12);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; font-size: 38px; font-weight: 800; color: #FFFFFF;
+    }
+    .brand-title {
+      font-size: 28px; font-weight: 800; letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #FFFFFF, #A1A1AA);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .brand-tagline {
+      font-size: 13px; color: #D4D4D8; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .copyright-bar {
+      position: fixed; bottom: 16px; left: 0; right: 0;
+      text-align: center; color: rgba(255, 255, 255, 0.55);
+      font-size: 11px; letter-spacing: 0.5px; z-index: 10;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.94); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <video id="promo-video" src="/promo.mp4" autoplay muted playsinline></video>
+  <div class="promo-fallback" id="fallback-ui">
+    <div class="lens-logo">π</div>
+    <div class="brand-title">PiSphere</div>
+    <div class="brand-tagline">Connect with Pi Network</div>
+  </div>
+  <div class="copyright-bar">© 2026 PiSphere. All Rights Reserved.</div>
+
+  <script>
+    const finishPromo = () => {
+      window.parent.postMessage('pisphere:promo-done', window.location.origin);
+    };
+    const video = document.getElementById('promo-video');
+    video.onended = finishPromo;
+    video.onerror = () => {
+      video.style.display = 'none';
+      setTimeout(finishPromo, 6500);
+    };
+    setTimeout(finishPromo, 6500);
+  </script>
+</body>
+</html>
